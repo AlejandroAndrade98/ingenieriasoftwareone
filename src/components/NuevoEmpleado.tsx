@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
-// import { appsettings } from "../settings/appsettings";
 import { useNavigate } from "react-router-dom";
-// import { Swal } from "sweetalert2";
+import  Swal  from "sweetalert2";
 import { IEmpleado } from "../interfaces/IEmpleado";
 import { Container,Row,Col,Form,FormGroup,Label,Input, Button } from "reactstrap";
+import { appsettings } from "../settings/appsettings";
 
 const initialEmpleado = {
     nombre: "",
@@ -22,10 +22,35 @@ export function NuevoEmpleado() {
     const inputChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
+        console.log(inputName, ":", inputValue);
+
         setEmpleado({...empleado, [inputName]: inputValue});
-        console.log(inputName, inputValue);
     }
 
+    const guardar = async() => {
+        const response = await fetch(`${appsettings.apiUrl}Empleado/Nuevo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(empleado)
+        })
+        if(response.ok){
+            navigate("/");
+        }else{
+            Swal.fire({
+                title:"Error!",
+                text:"No se pudo guardar el empleado",
+                icon:"warning"
+            });
+        }
+    }
+    console.log("boton guardar: ", {guardar});
+
+    const volver = () => {
+        navigate("/");
+    }
+    
     return (
         <div>
             <Container className="mt-5">
@@ -40,15 +65,15 @@ export function NuevoEmpleado() {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Correo</Label>
-                                    <Input type="text" name="Correo" onChange={inputChangeValue} value={empleado.correo}/>                               
+                                    <Input type="text" name="correo" onChange={inputChangeValue} value={empleado.correo}/>                               
                             </FormGroup>
                             <FormGroup>
                                 <Label>Sueldo</Label>
-                                    <Input type="number" name="Sueldo" onChange={inputChangeValue} value={empleado.sueldo}/>                               
+                                    <Input type="number" name="sueldo" onChange={inputChangeValue} value={empleado.sueldo}/>                               
                             </FormGroup>
                         </Form>
-                        <Button color="primary" className="me-4" onClick={() => {}}>Guardar</Button>
-                        <Button color="secondary" onClick={() => {}}>Volver</Button>
+                        <Button color="primary" className="me-4" onClick={guardar}>Guardar</Button>
+                        <Button color="secondary" onClick={volver}>Volver</Button>
 
                     </Col>
                 </Row>
@@ -56,5 +81,5 @@ export function NuevoEmpleado() {
         </div>
     );
     
-
+    
 }
