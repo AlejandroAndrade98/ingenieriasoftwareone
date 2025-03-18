@@ -32,7 +32,7 @@ export function EditarEmpleado() {
         }
         obtenerEmpleado();
 
-    },[])   
+    },[id])   
     
     const inputChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
         const inputName = event.target.name;

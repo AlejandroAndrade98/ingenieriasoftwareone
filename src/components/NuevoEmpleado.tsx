@@ -53,7 +53,7 @@ export function NuevoEmpleado() {
     
     return (
         <div>
-            <Container className="mt-5">
+            <Container className="mt-5 ">
                 <Row>
                     <Col sm={{size: 8, offset: 2}}>
                         <h4>Nuevo Empleado</h4>
