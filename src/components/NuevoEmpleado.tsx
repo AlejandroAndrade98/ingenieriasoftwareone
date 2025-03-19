@@ -5,6 +5,7 @@ import { IEmpleado } from "../interfaces/IEmpleado";
 import { Container,Row,Col,Form,FormGroup,Label,Input, Button } from "reactstrap";
 import { appsettings } from "../settings/appsettings";
 
+
 const initialEmpleado = {
     nombre: "",
     correo: "",
